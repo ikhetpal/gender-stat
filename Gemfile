@@ -37,6 +37,7 @@ group :development, :test do
   gem 'faker'
   gem 'simplecov'
   gem 'shoulda-matchers'
+  gem 'dotenv'
 end
 
 group :development do
@@ -64,3 +65,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'redis'
 gem 'sidekiq'
 gem 'sidekiq-cron'
+
+gem 'httparty'

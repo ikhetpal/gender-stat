@@ -35,6 +35,7 @@
 yarn-debug.log*
 .yarn-integrity
 
-.ruby-gemset
-coverage
 *.rdb
+.ruby-gemset
+.env
+coverage
