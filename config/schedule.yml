@@ -1,0 +1,6 @@
+# Job cron example
+
+# testing:
+#   cron: "*/1 * * * *" # it will retrieve data every 1 minute
+#   class: "TestJob" # Name of job
+#   queue: "default" # queue name
