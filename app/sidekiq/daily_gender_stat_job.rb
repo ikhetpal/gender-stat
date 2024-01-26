@@ -9,6 +9,7 @@ class DailyGenderStatJob
     @redis_female_count = RedisUtility.fetch_data('female_count')
   end
 
+  # reset redis male_count and female_count & update daily record if the data has not been updated
   def perform
     return if daily_record.nil?
     

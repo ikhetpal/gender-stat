@@ -9,6 +9,7 @@ class DailyRecord < ApplicationRecord
     self.assign_avg_age
   end
 
+  # if male_count/female_count is changed updating male_avg_age/female_avg_age
   def assign_avg_age
     self.male_avg_age = User.male_avg_age if self.male_count_changed?
     self.female_avg_age = User.female_avg_age if self.female_count_changed?

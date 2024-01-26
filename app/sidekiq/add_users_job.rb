@@ -22,6 +22,7 @@ class AddUsersJob
     update_daily_record
   end
 
+  # setting redis male_count and female_count
   def update_redis
     final_male_count = User.male_count
     final_female_count = User.female_count
@@ -33,6 +34,7 @@ class AddUsersJob
     RedisUtility.append_count('female_count', female_added_count)
   end
 
+  # setting daily record for male_count, female_count, male_avg_age and female_avg_age using ActiveModel::Dirty
   def update_daily_record
     redis_male_count = RedisUtility.fetch_data('male_count')
     redis_female_count = RedisUtility.fetch_data('female_count')
