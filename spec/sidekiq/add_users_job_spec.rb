@@ -63,7 +63,7 @@ RSpec.describe AddUsersJob, type: :job do
 
   before do
     allow(HTTParty).to receive(:get).and_return(stub_api_response)
-    allow(RedisUtility).to receive(:store_data).and_return('OK')
+    allow(RedisUtility).to receive(:append_count).and_return('OK')
   end
 
   describe '#initialize' do   
@@ -75,6 +75,16 @@ RSpec.describe AddUsersJob, type: :job do
     it 'sets count to passed value' do
       job = described_class.new(count: 10)
       expect(job.count).to eq(10)
+    end
+
+    it 'sets current_male_count' do
+      job = described_class.new
+      expect(job.current_male_count).to eq(User.male_count)
+    end
+
+    it 'sets current_male_count' do
+      job = described_class.new
+      expect(job.current_female_count).to eq(User.female_count)
     end
   end
 
