@@ -4,4 +4,7 @@ class User < ApplicationRecord
 	validates :uuid, uniqueness: true
 	validates :gender, inclusion: { in: GENDERS }
 	validates :age, numericality: { greater_than: 0 }
+
+	scope :male, -> { where(gender: 'male') }
+	scope :female, -> { where(gender: 'female') }
 end

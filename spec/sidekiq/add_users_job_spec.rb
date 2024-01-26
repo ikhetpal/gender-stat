@@ -1,8 +1,5 @@
 require 'rails_helper'
-
-RSpec.describe UserGenerateService, type: :service do
-  let!(:user_api_url) { ENV['NEW_USERS_URL'] }
-  let!(:default_final_api_url) { user_api_url + "?results=20" }
+RSpec.describe AddUsersJob, type: :job do
   let!(:stub_api_response) {
     {
       "results": [{
@@ -64,46 +61,26 @@ RSpec.describe UserGenerateService, type: :service do
     }.with_indifferent_access
   }
 
-  before { allow(HTTParty).to receive(:get).and_return(stub_api_response) }
+  before do
+    allow(HTTParty).to receive(:get).and_return(stub_api_response)
+    allow(RedisUtility).to receive(:store_data).and_return('OK')
+  end
 
   describe '#initialize' do   
-    it 'sets count and final_api_url based on default count as 20' do
-      service = described_class.new
-      expect(service.final_api_url).to eq(default_final_api_url)
-      expect(service.count).to eq(20)
+    it 'sets default count as 20' do
+      job = described_class.new
+      expect(job.count).to eq(20)
     end
 
-    it 'sets count and final_api_url based on count initialized' do
-      service = described_class.new(10)
-      final_url = user_api_url + "?results=10"
-      expect(service.final_api_url).to eq(final_url)
-      expect(service.count).to eq(10)
+    it 'sets count to passed value' do
+      job = described_class.new(count: 10)
+      expect(job.count).to eq(10)
     end
   end
 
-  describe '#fetch_users' do
-    it 'fetches users from the API' do      
-      service = described_class.new(1)
-      service.fetch_users
-
-      expect(service.users).to be_an(Array)
-      expect(service.users.first[:login][:uuid]).to eq(stub_api_response[:results].first[:login][:uuid])
-    end
-  end
-
-  describe '#generate' do
-    it 'creates users' do
-      service = described_class.new(1)
-      expect { service.generate }.to change { User.count }.by(1)
-
-      expect(User.exists?(uuid: stub_api_response[:results].first[:login][:uuid])).to eq(true)
-    end
-
-    it 'updates user' do
-      user = FactoryBot.create(:user, uuid: stub_api_response[:results].first[:login][:uuid])
-      service = described_class.new(1)
-      expect { service.generate }.to change { user.reload.name }
-      expect { service.generate }.not_to change { User.count }
+  describe '#perform' do
+    it 'calls UserGenerateService to generate users' do
+      expect { described_class.new(count: 1).perform }.to change { User.count }.by(1)
     end
   end
 end
