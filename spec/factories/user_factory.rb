@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    uuid { 'bd87745c-dffc-43c1-92b2-7565bc862484' }
+    uuid { Faker::Alphanumeric.unique.alphanumeric(number: 30) }
     gender { 'male' }
     name {
       {

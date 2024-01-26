@@ -9,13 +9,23 @@ RSpec.describe User, type: :model do
 
   context "methods" do
     it "returns current male count on calling #male_count" do
-      FactoryBot.create(:user, gender: 'male')
+      FactoryBot.create_list(:user, 20, gender: 'male')
       expect(described_class.male_count).to eq(User.male.count)
     end
 
     it "returns current female count on calling #female_count" do
-      FactoryBot.create(:user, gender: 'female')
+      FactoryBot.create_list(:user, 20, gender: 'female')
       expect(described_class.female_count).to eq(User.female.count)
+    end
+
+    it "returns male average age on calling #male_avg_age" do
+      FactoryBot.create_list(:user, 20, gender: 'male')
+      expect(described_class.male_avg_age).to eq(User.male.average(:age).to_f.round(2))
+    end
+
+    it "returns female average age on calling #female_avg_age" do
+      FactoryBot.create_list(:user, 20, gender: 'female')
+      expect(described_class.female_avg_age).to eq(User.female.average(:age).to_f.round(2))
     end
   end
 end

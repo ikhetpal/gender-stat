@@ -15,4 +15,12 @@ class User < ApplicationRecord
   def self.female_count
     female.count
   end
+
+  def self.male_avg_age
+    male.average(:age).to_f.round(2) rescue nil
+  end
+
+  def self.female_avg_age
+    female.average(:age).to_f.round(2) rescue nil
+  end
 end

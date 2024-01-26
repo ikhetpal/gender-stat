@@ -12,7 +12,8 @@ class DailyGenderStatJob
   def perform
     return if daily_record.nil?
     
-    daily_record.update(male_count: redis_male_count, female_count: redis_female_count)
+    daily_record.assign_gender_count(redis_male_count, redis_female_count)
+    daily_record.save
     reset_redis_data
   end
 

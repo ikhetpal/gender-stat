@@ -37,6 +37,7 @@ class AddUsersJob
     redis_male_count = RedisUtility.fetch_data('male_count')
     redis_female_count = RedisUtility.fetch_data('female_count')
 
-    current_daily_record.update(male_count: redis_male_count, female_count: redis_female_count)
+    current_daily_record.assign_gender_count(redis_male_count, redis_female_count)
+    current_daily_record.save
   end
 end

@@ -95,6 +95,7 @@ RSpec.describe AddUsersJob, type: :job do
       expect { described_class.new(count: 1).perform }.to change { User.count }.by(1)
       daily_record = DailyRecord.find_by(date: Date.current)
       expect(daily_record.male_count).to eq(1)
+      expect(daily_record.male_avg_age).to eq(User.male_avg_age)
     end
   end
 end

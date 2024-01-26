@@ -29,11 +29,13 @@ RSpec.describe DailyGenderStatJob, type: :job do
       expect(described_class.new.perform).to eq(nil)
     end
 
-    it 'updates daily record with male and female count and resets redis data' do
+    it 'updates daily record with male & female count and average age of male & female and resets redis data' do
       daily_record = FactoryBot.create(:daily_record, date: Date.yesterday, male_count: nil, female_count: nil, male_avg_age: nil, female_avg_age: nil)
       expect(described_class.new.perform).to eq('OK')
       expect(daily_record.reload.male_count).to eq(50)
       expect(daily_record.reload.female_count).to eq(50)
+      expect(daily_record.reload.male_avg_age).to eq(User.male_avg_age)
+      expect(daily_record.reload.female_avg_age).to eq(User.female_avg_age)
     end
   end
 end
