@@ -1,7 +1,7 @@
 require 'dotenv/load'
 
 class UserGenerateService
-  attr_accessor :count, :users
+  attr_accessor :count, :users, :final_api_url
 
   FETCH_USERS_URL = ENV['NEW_USERS_URL']
 
@@ -19,7 +19,7 @@ class UserGenerateService
   end
 
   def fetch_users
-    response = HTTParty.get(@final_api_url)
+    response = HTTParty.get(final_api_url)
     @users = response['results'].map(&:with_indifferent_access) if response.present?
   end
 
