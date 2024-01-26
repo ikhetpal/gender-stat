@@ -64,6 +64,8 @@ RSpec.describe AddUsersJob, type: :job do
   before do
     allow(HTTParty).to receive(:get).and_return(stub_api_response)
     allow(RedisUtility).to receive(:append_count).and_return('OK')
+    allow(RedisUtility).to receive(:fetch_data).with('male_count').and_return(1)
+    allow(RedisUtility).to receive(:fetch_data).with('female_count').and_return(0)
   end
 
   describe '#initialize' do   
@@ -89,8 +91,10 @@ RSpec.describe AddUsersJob, type: :job do
   end
 
   describe '#perform' do
-    it 'calls UserGenerateService to generate users' do
+    it 'calls UserGenerateService to generate users and update daily record' do
       expect { described_class.new(count: 1).perform }.to change { User.count }.by(1)
+      daily_record = DailyRecord.find_by(date: Date.current)
+      expect(daily_record.male_count).to eq(1)
     end
   end
 end
