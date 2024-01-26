@@ -68,7 +68,7 @@ RSpec.describe AddUsersJob, type: :job do
     allow(RedisUtility).to receive(:fetch_data).with('female_count').and_return(0)
   end
 
-  describe '#initialize' do   
+  describe '#initialize' do
     it 'sets default count as 20' do
       job = described_class.new
       expect(job.count).to eq(20)
