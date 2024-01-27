@@ -8,6 +8,19 @@ class User < ApplicationRecord
   scope :male, -> { where(gender: 'male') }
   scope :female, -> { where(gender: 'female') }
 
+  def full_name
+    begin
+      data = self.name.with_indifferent_access
+      title = data[:title]
+      first = data[:first]
+      last = data[:last]
+
+      return "#{title} #{first} #{last}"
+    rescue
+      ""
+    end
+  end
+
   def self.male_count
     male.count
   end

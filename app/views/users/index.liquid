@@ -1,0 +1,9 @@
+<h1>Users</h1>
+
+{% for user in users %}
+  <p>Name: {{ user.full_name }}</p>
+  <p>Age: {{ user.age }}</p>
+  <p>Gender: {{ user.gender }}</p>
+  <p>Created At: {{ user.created_at }}</p>
+  <hr>
+{% endfor %}

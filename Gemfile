@@ -68,3 +68,4 @@ gem 'sidekiq'
 gem 'sidekiq-cron'
 
 gem 'httparty'
+gem 'liquid-rails'
