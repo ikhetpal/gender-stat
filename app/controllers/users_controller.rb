@@ -8,7 +8,12 @@ class UsersController < ApplicationController
   private
 
   def set_users_data
-    users = User.all
+    unless params[:search].present?
+      users = User.all
+    else
+      users = User.search(params[:search])
+    end
+
     @users = users.map do |user|
       {
         'full_name' => user.full_name,

@@ -21,6 +21,10 @@ class User < ApplicationRecord
     end
   end
 
+  def self.search(name)
+    where("name::text ILIKE ?", "%#{name}%")
+  end
+
   def self.male_count
     male.count
   end

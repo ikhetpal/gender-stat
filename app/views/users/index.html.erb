@@ -1,1 +1,18 @@
 <%= raw @liquid_template.render('users' => @users ) %>
+
+<script type="text/javascript">
+  $(".search-users-submit").on('click', function() {
+    var search = document.getElementById('search-users-input').value;
+    if (search.trim().length !== 0) {
+      window.location.href = "http://localhost:3000/users?search=" + search;
+    }
+  });
+
+  $(".back-button").on('click', function() {
+    window.history.back();
+  });
+
+  $(".home-button").on('click', function() {
+    window.location.href = "http://localhost:3000/users";
+  });
+</script>
