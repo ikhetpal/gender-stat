@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   resources :users, only: %i(index destroy)
   root 'users#index'
+  resources :daily_records, only: %i(index)
 end

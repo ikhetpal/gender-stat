@@ -1,0 +1,10 @@
+<h1>Daily Records</h1>
+
+{% for daily_record in daily_records %}
+  <p>Date: {{ daily_record.date }}</p>
+  <p>Male Count: {{ daily_record.male_count }}</p>
+  <p>Female Count: {{ daily_record.female_count }}</p>
+  <p>Male Average Age: {{ daily_record.male_avg_age }}</p>
+  <p>Female Average Age: {{ daily_record.female_avg_age }}</p>
+  <hr>
+{% endfor %}
