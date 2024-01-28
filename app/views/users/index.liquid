@@ -6,5 +6,6 @@
   <p>Age: {{ user.age }}</p>
   <p>Gender: {{ user.gender }}</p>
   <p>Created At: {{ user.created_at }}</p>
+  <button type="button" class="user-delete-button" data-id={{ user.id }}>Delete</button>
   <hr>
 {% endfor %}

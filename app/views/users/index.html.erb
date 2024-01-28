@@ -15,4 +15,24 @@
   $(".home-button").on('click', function() {
     window.location.href = "http://localhost:3000/users";
   });
+
+  $(".user-delete-button").on('click', function() {
+    var userId = this.dataset.id
+    var isConfirmed = confirm('Are you sure you want to delete the user?');
+    var csrfToken = document.querySelector("meta[name=csrf-token]").content;
+
+    if (isConfirmed) {
+      $.ajax({
+        type: "DELETE",
+        url: "/users/" + userId,
+        headers: { "X-CSRF-Token": csrfToken },
+        success: function(response){
+          window.location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          return console.log("AJAX Error: " + textStatus);
+        }
+      });
+    }
+  });
 </script>

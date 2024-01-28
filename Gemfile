@@ -34,6 +34,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
   gem 'factory_bot_rails', '6.2.0'
+  gem 'rails-controller-testing'
   gem 'faker'
   gem 'simplecov'
   gem 'shoulda-matchers'
